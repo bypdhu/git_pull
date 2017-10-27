@@ -9,6 +9,7 @@ VERSION = '1.0.0'
 app = Flask(__name__)
 DEFAULT_BASE_DIR = "/home/admin/conf/ansible_playbooks/"
 DEFAULT_REPOSITORY = "ALL_REPOSITORIES"
+DEFAULT_BRANCH = "origin/develop"
 LOGGER_PATH = "/home/admin/conf/ansible_playbooks/logs"
 
 
@@ -47,12 +48,13 @@ def handle_request():
 
     base_dir = request.args.get('basedir', DEFAULT_BASE_DIR)
     repository = request.args.get('repository', DEFAULT_REPOSITORY)
+    branch = request.args.get('branch', DEFAULT_BRANCH)
 
     LOGGER.info("basedir: " + base_dir)
     LOGGER.info("repository: " + repository)
 
     try:
-        result = git_pull(base_dir, repository)
+        result = git_pull(base_dir, repository, branch)
         resp = {"msg": result}
         return jsonify(resp), 200
 
@@ -61,7 +63,7 @@ def handle_request():
         return jsonify(resp), 444
 
 
-def git_pull(base_dir, repository):
+def git_pull(base_dir, repository, branch):
     if not os.path.isdir(base_dir):
         raise Exception("can not find dir " + base_dir)
     repos_dir = []
@@ -76,7 +78,7 @@ def git_pull(base_dir, repository):
 
     results = []
     for repos in repos_dir:
-        p = subprocess.Popen('cd %s && git pull' % repos, shell=True, stdout=subprocess.PIPE,
+        p = subprocess.Popen('cd %s && git fetch --all && git reset --hard %s' % (repos, branch), shell=True, stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT)
         r = {"stdout": p.stdout.read()}
         LOGGER.info(str(r))
