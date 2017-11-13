@@ -63,6 +63,12 @@ def handle_request():
         return jsonify(resp), 444
 
 
+@app.route("/health", methods=['GET'])
+def handle_request_health():
+    resp = {"msg": "success"}
+    return jsonify(resp), 200
+
+
 def git_pull(base_dir, repository, branch):
     if not os.path.isdir(base_dir):
         raise Exception("can not find dir " + base_dir)
