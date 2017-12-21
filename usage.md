@@ -18,7 +18,7 @@
     {
         "basedir": "",  # default: /home/admin/conf/ansible_playbooks/
         "repository", "",  # default: ALL_REPOSITORIES
-        "branch", ""
+        "branch", ""  # default: origin/develop
     }
 
 ```

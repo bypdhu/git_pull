@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
-kill `ps -ef|grep gitpull.py|grep -v grep|awk '{print $2}'`
+pid=`ps -ef|grep gitpull.py|grep -v grep|awk '{print $2}'`
+if [ -n $pid ]; then
+    kill $pid
+fi
 nohup python gitpull.py > gitpull.log & sleep 0
