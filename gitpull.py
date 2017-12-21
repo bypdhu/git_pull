@@ -44,11 +44,14 @@ def type_error():
 
 @app.route("/gitpull", methods=['POST'])
 def handle_request():
-    LOGGER.info("sender:  %s" % request.json.get('sender'))
-    LOGGER.info("pusher:  %s" % request.json.get('pusher'))
-    LOGGER.info("before:  %s" % request.json.get('before'))
-    LOGGER.info("after:  %s" % request.json.get('after'))
-    LOGGER.info('remote addr is : %s' % request.remote_addr)
+    try:
+        LOGGER.info("sender:  %s" % request.json.get('sender'))
+        LOGGER.info("pusher:  %s" % request.json.get('pusher'))
+        LOGGER.info("before:  %s" % request.json.get('before'))
+        LOGGER.info("after:  %s" % request.json.get('after'))
+        LOGGER.info('remote addr is : %s' % request.remote_addr)
+    except:
+        pass
     if request.headers.get('Content-Type') != "application/json":
         abort(400)
     # user_data = json.loads(request.get_data())
