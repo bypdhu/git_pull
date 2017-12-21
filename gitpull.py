@@ -97,7 +97,7 @@ def git_pull(base_dir, repository, branch):
         p = subprocess.Popen('cd %s && git fetch --all && git reset --hard %s' % (repos, branch),
                              shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         r = {"stdout": p.stdout.read()}
-        LOGGER.info(str(r))
+        # LOGGER.info(str(r))
         results.append({repos: r})
     LOGGER.info(results)
     return results
