@@ -47,6 +47,7 @@ def handle_request():
     try:
         LOGGER.info("sender:  %s" % request.json.get('sender'))
         LOGGER.info("pusher:  %s" % request.json.get('pusher'))
+        LOGGER.info("commits:  %s" % request.json.get('commits'))
         LOGGER.info("before:  %s" % request.json.get('before'))
         LOGGER.info("after:  %s" % request.json.get('after'))
         LOGGER.info('remote addr is : %s' % request.remote_addr)
